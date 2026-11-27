@@ -9,6 +9,14 @@
       name="description"
       content="Hugo (Phan Thanh Bình): Front-end Lead and full-stack developer who solves problems with web, mobile and desktop apps, scripts and IT support."
     />
+    <script>
+      // Apply the saved or system theme before first paint (no flash).
+      try {
+        var t = localStorage.getItem('hugo.theme')
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/png" href="%BASE_URL%favicon-64.png" />
     <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
   </head>
