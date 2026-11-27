@@ -1,0 +1,41 @@
+/* Colours follow Hugo's avatar: yellow on black. */
+:root,
+[data-theme='dark'] {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface-2: #1c232c;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --line: #2a313c;
+  --add: #56d364; /* diff + lines */
+  --del: #ff7b72; /* diff - lines */
+  --info: #79c0ff;
+  --accent: #ffc21a; /* fills, 3D, highlights */
+  --accent-text: #ffc21a; /* accent used as text */
+  --accent-ink: #141414; /* text on top of an accent fill */
+  --glow: rgba(255, 194, 26, 0.32);
+  --header-bg: rgba(13, 17, 23, 0.94);
+  --focus: #ffc21a;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: #fbf6ea;
+  --surface: #ffffff;
+  --surface-2: #f3ecdb;
+  --text: #17171a;
+  --muted: #55555c;
+  --line: #e6dcc6;
+  --accent: #ffc21a;
+  --add: #14602a;
+  --del: #a4161f;
+  --info: #0b5fa5;
+  --accent-text: #8a5f00;
+  --accent-ink: #141414;
+  --glow: rgba(255, 194, 26, 0.45);
+  --header-bg: rgba(251, 246, 234, 1);
+  --focus: #17171a;
+  color-scheme: light;
+}
