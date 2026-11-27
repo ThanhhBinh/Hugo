@@ -50,6 +50,20 @@ describe('Terminal', () => {
   })
 })
 
+describe('Terminal on re-render', () => {
+  test('new output text replaces the old without typing again or finishing twice', () => {
+    vi.useFakeTimers()
+    const done = vi.fn()
+    const { rerender } = render(<Terminal lines={lines} onDone={done} />)
+    act(() => vi.advanceTimersByTime(20000))
+    expect(done).toHaveBeenCalledTimes(1)
+    rerender(<Terminal lines={[lines[0]!, { cmd: 'cat role.txt', out: 'Trưởng nhóm Front-end' }]} onDone={done} />)
+    expect(screen.getByText('Trưởng nhóm Front-end')).toBeInTheDocument()
+    act(() => vi.advanceTimersByTime(20000))
+    expect(done).toHaveBeenCalledTimes(1)
+  })
+})
+
 describe('useCountUp', () => {
   test('reduced motion shows the final number immediately', () => {
     reduce()

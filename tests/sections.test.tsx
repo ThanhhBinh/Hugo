@@ -66,8 +66,12 @@ describe('App sections', () => {
   test('the hero terminal shows role and stack (reduced motion shows it at once)', () => {
     stubMatchMedia((q) => q === '(prefers-reduced-motion: reduce)')
     render(<App />)
-    expect(screen.getByText(en.hero.keywords)).toBeInTheDocument()
-    expect(screen.getByText('React · TypeScript · Flutter')).toBeInTheDocument()
+    const term = screen.getByTestId('terminal')
+    expect(term).toHaveTextContent(en.hero.keywords)
+    expect(term).toHaveTextContent('React · TypeScript · Flutter')
+    // Screen readers get the same facts as plain text, not the typing.
+    expect(term).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.getByText(/Phan Thanh Bình — .*React · TypeScript · Flutter/)).toBeInTheDocument()
   })
 
   test('each work project shows its problem as a removed diff line', () => {

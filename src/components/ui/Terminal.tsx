@@ -8,7 +8,6 @@ export interface TerminalLine {
 
 interface Props {
   lines: TerminalLine[]
-  title?: string
   onDone?: () => void
 }
 
@@ -17,11 +16,14 @@ const AFTER_CMD_MS = 250
 const AFTER_OUT_MS = 350
 
 /** A terminal window that types its commands one character at a time. Reduced motion shows everything at once. */
-export function Terminal({ lines, title = 'hugo@portfolio — zsh', onDone }: Props) {
+export function Terminal({ lines, onDone }: Props) {
   const reduced = useReducedMotion()
   // line = command being typed, chars = how much of it is typed, outs = how many outputs are shown.
   const [state, setState] = useState({ line: 0, chars: 0, outs: 0 })
+  // Latest props, read inside the typing timers. The commands never change, only the output text does,
+  // so a new `lines` (e.g. after a language switch) must not restart the typing.
   const done = useRef(onDone)
+  const cmds = useRef(lines.map((l) => l.cmd))
   useEffect(() => {
     done.current = onDone
   })
@@ -35,30 +37,30 @@ export function Terminal({ lines, title = 'hugo@portfolio — zsh', onDone }: Pr
     }
     let timer = 0
     const run = (line: number, chars: number) => {
-      const cmd = lines[line]!.cmd
+      const cmd = cmds.current[line]!
       if (chars < cmd.length) {
         setState({ line, chars: chars + 1, outs: line })
         timer = window.setTimeout(() => run(line, chars + 1), KEY_MS)
       } else {
         timer = window.setTimeout(() => {
           setState({ line, chars, outs: line + 1 })
-          if (line + 1 < lines.length) timer = window.setTimeout(() => run(line + 1, 0), AFTER_OUT_MS)
+          if (line + 1 < cmds.current.length) timer = window.setTimeout(() => run(line + 1, 0), AFTER_OUT_MS)
           else done.current?.()
         }, AFTER_CMD_MS)
       }
     }
     timer = window.setTimeout(() => run(0, 0), KEY_MS)
     return () => window.clearTimeout(timer)
-  }, [reduced, lines])
+  }, [reduced])
 
   const finished = view.outs === lines.length
   return (
     <div className="window terminal">
       <div className="window-bar" aria-hidden="true">
         <i /><i /><i />
-        <span>{title}</span>
+        <span>hugo@portfolio — zsh</span>
       </div>
-      <div className="term" data-testid="terminal">
+      <div className="term" data-testid="terminal" aria-hidden="true">
         {lines.map((l, i) => {
           if (i > view.line) return null
           const typed = i < view.line ? l.cmd : l.cmd.slice(0, view.chars)

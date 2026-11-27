@@ -20,9 +20,7 @@ export const vi: UiStrings = {
   hero: {
     eyebrow: 'Xin chào, rất vui được gặp bạn',
     title: 'Mình là Hugo. Mình giải quyết vấn đề — bằng web, app, script hay bất cứ thứ gì công việc cần.',
-    subtitle: 'Front-end Lead · Full-stack · Web · Mobile · Desktop · IT',
     cta: 'Liên hệ với mình',
-    ctaSecondary: 'Xem hành trình',
     keywords: 'Front-end Lead · ~2 năm kinh nghiệm',
     downloadCv: 'Tải CV (PDF)',
     hire: 'Thuê mình làm dự án',

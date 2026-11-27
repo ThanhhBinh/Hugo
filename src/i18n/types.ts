@@ -25,9 +25,7 @@ export interface UiStrings {
   hero: {
     eyebrow: string
     title: string
-    subtitle: string
     cta: string
-    ctaSecondary: string
     keywords: string
     downloadCv: string
     hire: string

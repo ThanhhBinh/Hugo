@@ -26,3 +26,9 @@ Chỉ đổi giao diện và chuyển động. Nội dung (`src/content/*`), ng�
 
 ## Ngoài phạm vi
 Ảnh chụp dự án thật, nội dung mới, LinkedIn.
+
+## Ghi chú sau khi làm (điều chỉnh so với bản phác)
+- Đường git là CSS thuần (đoạn vàng cho mỗi section đã tới, chấm sáng ở tiêu đề), không có component `GitRail` đo cuộn riêng: ít code hơn, cùng hiệu quả.
+- Menu trên header chỉ đổi sang chữ mono và gạch chân vàng cho mục đang xem; nhãn vẫn là chữ dịch được (không đặt tên file thật để tránh hai bản ngôn ngữ).
+- Khung `Window` có thanh tiêu đề dùng cho banner (terminal), sự nghiệp, dự án và dịch vụ. Kinh nghiệm, mục tiêu, học vấn, liên hệ giữ dạng thẻ/dòng thời gian, chỉ thêm nhãn tên file ở tiêu đề.
+- Terminal trong banner ẩn khỏi trình đọc màn hình (aria-hidden) và có bản chữ đầy đủ cho họ.

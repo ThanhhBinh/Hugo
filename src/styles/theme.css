@@ -10,7 +10,6 @@
   --add: #56d364; /* diff + lines */
   --del: #ff7b72; /* diff - lines */
   --info: #79c0ff;
-  --code-purple: #d2a8ff;
   --accent: #ffc21a; /* fills, 3D, highlights */
   --accent-text: #ffc21a; /* accent used as text */
   --accent-ink: #141414; /* text on top of an accent fill */
@@ -30,10 +29,9 @@
   --muted: #55555c;
   --line: #e6dcc6;
   --accent: #ffc21a;
-  --add: #1a7f37;
-  --del: #cf222e;
+  --add: #14602a;
+  --del: #a4161f;
   --info: #0b5fa5;
-  --code-purple: #7a40c8;
   --accent-text: #8a5f00;
   --accent-ink: #141414;
   --glow: rgba(255, 194, 26, 0.45);

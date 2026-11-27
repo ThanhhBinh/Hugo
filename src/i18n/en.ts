@@ -20,9 +20,7 @@ export const en: UiStrings = {
   hero: {
     eyebrow: 'Hello, nice to meet you',
     title: "I'm Hugo. I solve problems, with web, apps, scripts or whatever the job needs.",
-    subtitle: 'Front-end Lead · Full-stack · Web · Mobile · Desktop · IT',
     cta: 'Get in touch',
-    ctaSecondary: 'See my journey',
     keywords: 'Front-end Lead · ~2 years experience',
     downloadCv: 'Download CV (PDF)',
     hire: 'Hire me for a project',

@@ -1,8 +1,4 @@
 /* ---------- IDE look: windows, terminal, git log, diff ------------------- */
-:root {
-  --mono: var(--font-mono);
-}
-
 .window {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -25,7 +21,7 @@
   padding: 9px 14px;
   background: var(--surface-2);
   border-bottom: 1px solid var(--line);
-  font: 500 0.75rem var(--mono);
+  font: 500 0.75rem var(--font-mono);
   color: var(--muted);
 }
 
@@ -60,8 +56,8 @@
 
 .term {
   padding: 18px 22px;
-  font: 400 0.92rem/1.75 var(--mono);
-  min-height: 11.5em;
+  font: 400 0.92rem/1.75 var(--font-mono);
+  min-height: 15em; /* the final height, so the headline below does not jump while typing */
 }
 
 .term p {
@@ -105,8 +101,10 @@
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
+/* Hidden (and out of the tab order) until the terminal has finished typing. */
 .hero-actions:not(.ready) {
   opacity: 0;
+  visibility: hidden;
   transform: translateY(10px);
 }
 
@@ -114,8 +112,8 @@
 .ladder {
   list-style: none;
   margin: 0;
-  padding: 18px 22px;
-  font: 400 0.92rem/2 var(--mono);
+  padding: 0;
+  font: 400 0.92rem/2 var(--font-mono);
 }
 
 .commit {
@@ -170,7 +168,7 @@
 }
 
 .stat-value {
-  font-family: var(--mono);
+  font-family: var(--font-mono);
 }
 
 /* Project cards: facts + diff */
@@ -190,7 +188,7 @@
   padding: 18px 0;
   background: var(--bg);
   border-left: 1px solid var(--line);
-  font: 400 0.85rem/1.9 var(--mono);
+  font: 400 0.85rem/1.9 var(--font-mono);
   counter-reset: line;
   display: flex;
   flex-direction: column;
@@ -271,7 +269,7 @@
 .case dt,
 .section-index,
 .sub-title {
-  font-family: var(--mono);
+  font-family: var(--font-mono);
 }
 
 /* Services */
@@ -280,13 +278,13 @@
 }
 
 .service h3 {
-  font: 600 1rem var(--mono);
+  font: 600 1rem var(--font-mono);
 }
 
 /* Header as editor tabs */
 .brand span,
 .main-nav a {
-  font-family: var(--mono);
+  font-family: var(--font-mono);
 }
 
 .main-nav a {
@@ -305,7 +303,7 @@
 
 .section-file {
   margin-left: auto;
-  font: 500 0.78rem var(--mono);
+  font: 500 0.78rem var(--font-mono);
   color: var(--muted);
 }
 
@@ -372,6 +370,7 @@
   .term {
     padding: 14px 16px;
     font-size: 0.82rem;
+    min-height: 17em;
   }
 }
 
@@ -384,12 +383,9 @@
 
   .hero-actions:not(.ready) {
     opacity: 1;
+    visibility: visible;
     transform: none;
   }
-}
-
-.window-body .ladder {
-  padding: 0;
 }
 
 .stats {
@@ -400,4 +396,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

@@ -14,6 +14,10 @@ const ratio = (a: string, b: string) => {
   const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x) as [number, number]
   return (hi + 0.05) / (lo + 0.05)
 }
+function mix(fg: string, bg: string, a: number) {
+  const ch = (i: number) => Math.round(parseInt(fg.slice(i, i + 2), 16) * a + parseInt(bg.slice(i, i + 2), 16) * (1 - a))
+  return '#' + [1, 3, 5].map((i) => ch(i).toString(16).padStart(2, '0')).join('')
+}
 const dark = vars(css.slice(0, css.indexOf("[data-theme='light']")))
 const light = vars(css.slice(css.indexOf("[data-theme='light']")))
 
@@ -27,6 +31,9 @@ describe('theme contrast (WCAG AA)', () => {
         expect(ratio(t.add!, bg)).toBeGreaterThanOrEqual(4.5)
         expect(ratio(t.del!, bg)).toBeGreaterThanOrEqual(4.5)
       }
+      // Diff rows: text on its own tint (12% / 10%) over the page background.
+      expect(ratio(t.add!, mix(t.add!, t.bg!, 0.12))).toBeGreaterThanOrEqual(4.5)
+      expect(ratio(t.del!, mix(t.del!, t.bg!, 0.1))).toBeGreaterThanOrEqual(4.5)
       expect(ratio(t['accent-ink']!, t.accent!)).toBeGreaterThanOrEqual(4.5)
     })
   }

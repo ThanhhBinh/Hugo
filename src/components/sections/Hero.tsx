@@ -35,6 +35,9 @@ export function Hero() {
   return (
     <section id="hero" className="hero" data-shape="sphere" aria-labelledby="hero-title">
       <div className="hero-text">
+        <p className="sr-only">
+          {profile.fullName} — {t.hero.keywords} — React · TypeScript · Flutter
+        </p>
         <Terminal
           lines={lines}
           onDone={() => {

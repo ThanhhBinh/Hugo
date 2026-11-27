@@ -11,7 +11,8 @@ function Stat({ value, label }: { value: string; label: string }) {
   const shown = useCountUp(value, seen)
   return (
     <div className="card stat" ref={ref}>
-      <span className="stat-value">{shown}</span>
+      <span className="stat-value" aria-hidden="true">{shown}</span>
+      <span className="sr-only">{value}</span>
       <span className="stat-label">{label}</span>
     </div>
   )
