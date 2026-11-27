@@ -57,7 +57,6 @@ export interface UiStrings {
     gpa: string
     did: string
     result: string
-    illustration: string
     team: string
   }
   contact: { lead: string; email: string; github: string; location: string; sendEmail: string }

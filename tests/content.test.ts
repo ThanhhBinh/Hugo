@@ -52,11 +52,11 @@ describe('content', () => {
       expect(p.did?.vi, p.name).toHaveLength(3)
       expect(p.result?.en.length, p.name).toBeGreaterThan(0)
     }
-    expect(projects.filter((x) => x.group === 'work').map((p) => p.art)).toEqual(['radar', 'campaigns', 'audit'])
   })
 
   test('services and goals have the planned shape', () => {
     expect(services.items).toHaveLength(4)
+    expect(services.items.map((i) => i.file)).toEqual(['web.tsx', 'apps.dart', 'auto.sh', 'it.conf'])
     expect(services.steps).toHaveLength(3)
     expect(goals).toHaveLength(3)
   })

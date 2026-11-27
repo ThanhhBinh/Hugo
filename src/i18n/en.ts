@@ -47,7 +47,6 @@ export const en: UiStrings = {
   labels: { problem: 'Problem', solution: 'What I built', role: 'Role', promoted: 'Promoted', gpa: 'GPA',
     did: 'What I did',
     result: 'Result',
-    illustration: 'Illustration, not a real screenshot',
     team: 'Team',
   },
   contact: {

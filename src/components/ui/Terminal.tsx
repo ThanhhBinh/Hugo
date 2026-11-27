@@ -22,11 +22,14 @@ export function Terminal({ lines, title = 'hugo@portfolio — zsh', onDone }: Pr
   // line = command being typed, chars = how much of it is typed, outs = how many outputs are shown.
   const [state, setState] = useState({ line: 0, chars: 0, outs: 0 })
   const done = useRef(onDone)
-  done.current = onDone
+  useEffect(() => {
+    done.current = onDone
+  })
+  const last = lines[lines.length - 1]!
+  const view = reduced ? { line: lines.length - 1, chars: last.cmd.length, outs: lines.length } : state
 
   useEffect(() => {
     if (reduced) {
-      setState({ line: lines.length - 1, chars: lines[lines.length - 1]!.cmd.length, outs: lines.length })
       done.current?.()
       return
     }
@@ -48,7 +51,7 @@ export function Terminal({ lines, title = 'hugo@portfolio — zsh', onDone }: Pr
     return () => window.clearTimeout(timer)
   }, [reduced, lines])
 
-  const finished = state.outs === lines.length
+  const finished = view.outs === lines.length
   return (
     <div className="window terminal">
       <div className="window-bar" aria-hidden="true">
@@ -57,16 +60,16 @@ export function Terminal({ lines, title = 'hugo@portfolio — zsh', onDone }: Pr
       </div>
       <div className="term" data-testid="terminal">
         {lines.map((l, i) => {
-          if (i > state.line) return null
-          const typed = i < state.line ? l.cmd : l.cmd.slice(0, state.chars)
+          if (i > view.line) return null
+          const typed = i < view.line ? l.cmd : l.cmd.slice(0, view.chars)
           const complete = typed.length === l.cmd.length
           return (
             <div key={l.cmd}>
               <p className="term-cmd">
                 <span className="prompt">$</span> {complete ? <span className="cmd">{typed}</span> : typed}
-                {i === state.line && !finished && <span className="cursor" aria-hidden="true" />}
+                {i === view.line && !finished && <span className="cursor" aria-hidden="true" />}
               </p>
-              {i < state.outs && <p className="term-out">{l.out}</p>}
+              {i < view.outs && <p className="term-out">{l.out}</p>}
             </div>
           )
         })}

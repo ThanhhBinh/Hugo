@@ -7,7 +7,7 @@ export function Education() {
   const { t, pick } = useLanguage()
   return (
     <section id="education" className="section" data-shape="dots" aria-labelledby="education-title">
-      <SectionHeading index="07" title={t.section.education} id="education-title" />
+      <SectionHeading index="07" title={t.section.education} id="education-title" file="education.md" />
       {education.studying && (
         <Reveal className="card school studying">
           <div>

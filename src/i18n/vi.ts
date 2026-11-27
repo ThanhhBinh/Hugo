@@ -47,7 +47,6 @@ export const vi: UiStrings = {
   labels: { problem: 'Vấn đề', solution: 'Mình đã làm', role: 'Vai trò', promoted: 'Lên chức', gpa: 'ĐTB',
     did: 'Mình đã làm',
     result: 'Kết quả',
-    illustration: 'Hình minh hoạ, không phải ảnh thật',
     team: 'Nhóm',
   },
   contact: {

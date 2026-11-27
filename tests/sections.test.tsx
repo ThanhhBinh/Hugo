@@ -5,6 +5,8 @@ import { career, projects } from '../src/content'
 import { en } from '../src/i18n/en'
 import { vi } from '../src/i18n/vi'
 
+declare const stubMatchMedia: (m?: (q: string) => boolean) => void
+
 const SECTION_IDS = ['hero', 'highlights', 'projects', 'services', 'experience', 'toolbox', 'goals', 'education', 'contact']
 
 describe('App sections', () => {
@@ -52,12 +54,34 @@ describe('App sections', () => {
     }
   })
 
-  test('the career ladder shows four steps in order', () => {
+  test('the career log lists four commits, newest first, with HEAD on the latest', () => {
     render(<App />)
-    const ladder = screen.getByRole('list', { name: en.section.highlights })
-    const steps = within(ladder).getAllByRole('listitem')
-    expect(steps.map((s) => s.textContent)).toEqual(career.ladder.map((l) => expect.stringContaining(l.role)))
-    expect(steps[3]).toHaveTextContent('03/2026')
+    const log = screen.getByRole('list', { name: en.section.highlights })
+    const commits = within(log).getAllByRole('listitem')
+    expect(commits.map((c) => c.textContent)).toEqual([...career.ladder].reverse().map((l) => expect.stringContaining(l.role)))
+    expect(commits[0]).toHaveTextContent('03/2026')
+    expect(commits[0]).toHaveTextContent('HEAD')
+  })
+
+  test('the hero terminal shows role and stack (reduced motion shows it at once)', () => {
+    stubMatchMedia((q) => q === '(prefers-reduced-motion: reduce)')
+    render(<App />)
+    expect(screen.getByText(en.hero.keywords)).toBeInTheDocument()
+    expect(screen.getByText('React · TypeScript · Flutter')).toBeInTheDocument()
+  })
+
+  test('each work project shows its problem as a removed diff line', () => {
+    const { container } = render(<App />)
+    for (const p of projects.filter((x) => x.group === 'work')) {
+      const del = [...container.querySelectorAll('.diff .del')].find((li) => li.textContent?.includes(p.problem.en))
+      expect(del, p.name).toBeTruthy()
+    }
+  })
+
+  test('final numbers show without motion', () => {
+    stubMatchMedia((q) => q === '(prefers-reduced-motion: reduce)')
+    render(<App />)
+    for (const s of career.stats) expect(screen.getAllByText(s.value).length).toBeGreaterThan(0)
   })
 
   test('switching to Vietnamese changes the hero and the navigation', () => {

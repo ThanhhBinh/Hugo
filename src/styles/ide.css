@@ -1,0 +1,403 @@
+/* ---------- IDE look: windows, terminal, git log, diff ------------------- */
+:root {
+  --mono: var(--font-mono);
+}
+
+.window {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 50px -32px #000;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.window:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+  box-shadow: 0 18px 40px -22px var(--glow);
+}
+
+.window-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  font: 500 0.75rem var(--mono);
+  color: var(--muted);
+}
+
+.window-bar i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.window-bar i:nth-child(2) {
+  background: #febc2e;
+}
+
+.window-bar i:nth-child(3) {
+  background: #28c840;
+}
+
+.window-bar span {
+  margin-left: 8px;
+}
+
+.window-body {
+  padding: 18px 20px;
+}
+
+/* Terminal (hero) */
+.terminal {
+  margin-bottom: 26px;
+  max-width: 560px;
+}
+
+.term {
+  padding: 18px 22px;
+  font: 400 0.92rem/1.75 var(--mono);
+  min-height: 11.5em;
+}
+
+.term p {
+  margin: 0;
+}
+
+.prompt {
+  color: var(--muted);
+}
+
+.cmd,
+.term-cmd {
+  color: var(--info);
+}
+
+.term-out {
+  color: var(--text);
+}
+
+.ok {
+  color: var(--add);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--accent);
+  vertical-align: -0.2em;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero-actions {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero-actions:not(.ready) {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Git log (career) */
+.ladder {
+  list-style: none;
+  margin: 0;
+  padding: 18px 22px;
+  font: 400 0.92rem/2 var(--mono);
+}
+
+.commit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.ladder.in .commit {
+  opacity: 1;
+  transform: none;
+}
+
+.ladder.in .commit:nth-child(2) {
+  transition-delay: 0.35s;
+}
+
+.ladder.in .commit:nth-child(3) {
+  transition-delay: 0.7s;
+}
+
+.ladder.in .commit:nth-child(4) {
+  transition-delay: 1.05s;
+}
+
+.commit-dot {
+  color: var(--accent-text);
+}
+
+.commit-date {
+  color: var(--muted);
+}
+
+.commit-head {
+  color: var(--add);
+}
+
+.commit-role {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stat {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.stat:hover {
+  transform: translateY(-3px);
+}
+
+.stat-value {
+  font-family: var(--mono);
+}
+
+/* Project cards: facts + diff */
+.case {
+  padding: 0;
+  gap: 0;
+  align-items: stretch;
+}
+
+.case-body {
+  padding: 26px;
+}
+
+.diff {
+  list-style: none;
+  margin: 0;
+  padding: 18px 0;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  font: 400 0.85rem/1.9 var(--mono);
+  counter-reset: line;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.case.flip .diff {
+  order: -1;
+  border-left: 0;
+  border-right: 1px solid var(--line);
+}
+
+.diff li {
+  position: relative;
+  counter-increment: line;
+  padding: 0 18px 0 56px;
+  border-left: 3px solid transparent;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.diff li::before {
+  content: counter(line);
+  position: absolute;
+  left: 14px;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.diff.in li {
+  opacity: 1;
+  transform: none;
+}
+
+.diff.in li:nth-child(2) {
+  transition-delay: 0.3s;
+}
+
+.diff.in li:nth-child(3) {
+  transition-delay: 0.6s;
+}
+
+.diff.in li:nth-child(4) {
+  transition-delay: 0.9s;
+}
+
+.diff.in li:nth-child(5) {
+  transition-delay: 1.3s;
+}
+
+.diff .ctx {
+  color: var(--muted);
+}
+
+.diff .mark {
+  display: inline-block;
+  width: 1.6ch;
+}
+
+.diff .add {
+  color: var(--add);
+  border-left-color: var(--add);
+  background: color-mix(in srgb, var(--add) 12%, transparent);
+}
+
+.diff .del {
+  color: var(--del);
+  border-left-color: var(--del);
+  background: color-mix(in srgb, var(--del) 10%, transparent);
+}
+
+.diff.in .del {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--del) 55%, transparent);
+}
+
+.case dt,
+.section-index,
+.sub-title {
+  font-family: var(--mono);
+}
+
+/* Services */
+.service .window {
+  height: 100%;
+}
+
+.service h3 {
+  font: 600 1rem var(--mono);
+}
+
+/* Header as editor tabs */
+.brand span,
+.main-nav a {
+  font-family: var(--mono);
+}
+
+.main-nav a {
+  font-size: 0.8rem;
+  border-radius: 6px 6px 0 0;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav a[aria-current='true'] {
+  border-bottom-color: var(--accent);
+}
+
+.section-title {
+  position: relative;
+}
+
+.section-file {
+  margin-left: auto;
+  font: 500 0.78rem var(--mono);
+  color: var(--muted);
+}
+
+/* The git rail: one line down the page, one lit commit per section (wide screens only) */
+@media (min-width: 1100px) {
+  .section {
+    position: relative;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--line);
+  }
+
+  .section:has(.section-title.lit)::before {
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--glow);
+  }
+
+  .section-title::before {
+    content: '';
+    position: absolute;
+    left: -45px;
+    top: 0.45em;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 3px solid var(--line);
+    z-index: 1;
+    transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .section-title.lit::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 14px var(--glow);
+  }
+}
+
+@media (max-width: 959px) {
+  .case-body {
+    padding: 20px;
+  }
+
+  .diff,
+  .case.flip .diff {
+    order: 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 520px) {
+  .diff li {
+    padding-left: 44px;
+  }
+
+  .term {
+    padding: 14px 16px;
+    font-size: 0.82rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .commit,
+  .diff li {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-actions:not(.ready) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.window-body .ladder {
+  padding: 0;
+}
+
+.stats {
+  margin-top: 16px;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

@@ -1,7 +1,7 @@
 import { projects, type Project } from '../../content'
+import { useInView } from '../../hooks/useInView'
 import { useLanguage } from '../../i18n/useLanguage'
 import { Chip } from '../ui/Chip'
-import { ProjectArt } from '../ui/ProjectArt'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeading } from '../ui/SectionHeading'
 
@@ -15,17 +15,12 @@ function Stack({ stack }: { stack: string[] }) {
   )
 }
 
-/** Big case-study card for the projects Hugo built at work. */
+/** Big case-study card: facts on one side, a "diff" on the other (+ what I did, - the problem that is gone). */
 function CaseCard({ project, index }: { project: Project; index: number }) {
   const { t, pick } = useLanguage()
+  const [ref, seen] = useInView<HTMLUListElement>(0.4)
   return (
-    <Reveal as="article" index={0} className={`card case${index % 2 ? ' flip' : ''}`}>
-      {project.art !== 'none' && (
-        <figure className="case-art">
-          <ProjectArt kind={project.art} />
-          <figcaption>{t.labels.illustration}</figcaption>
-        </figure>
-      )}
+    <Reveal as="article" index={0} className={`window case${index % 2 ? ' flip' : ''}`}>
       <div className="case-body">
         <header>
           <h3>{project.name}</h3>
@@ -36,16 +31,6 @@ function CaseCard({ project, index }: { project: Project; index: number }) {
             <dt>{t.labels.problem}</dt>
             <dd>{pick(project.problem)}</dd>
           </div>
-          <div>
-            <dt>{t.labels.did}</dt>
-            <dd>
-              <ul className="did-list">
-                {project.did && pick(project.did).map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </dd>
-          </div>
           {project.result && (
             <div>
               <dt>{t.labels.result}</dt>
@@ -55,6 +40,13 @@ function CaseCard({ project, index }: { project: Project; index: number }) {
         </dl>
         <Stack stack={project.stack} />
       </div>
+      <ul className={`diff${seen ? ' in' : ''}`} ref={ref} aria-label={t.labels.did}>
+        <li className="ctx">{`// ${t.labels.did}`}</li>
+        {project.did && pick(project.did).map((item) => (
+          <li key={item} className="add"><span className="mark" aria-hidden="true">+</span>{item}</li>
+        ))}
+        <li className="del"><span className="mark" aria-hidden="true">-</span>{pick(project.problem)}</li>
+      </ul>
     </Reveal>
   )
 }
@@ -88,7 +80,7 @@ export function Projects() {
   const school = projects.filter((p) => p.group === 'school')
   return (
     <section id="projects" className="section" data-shape="dots" aria-labelledby="projects-title">
-      <SectionHeading index="02" title={t.section.projects} id="projects-title" />
+      <SectionHeading index="02" title={t.section.projects} id="projects-title" file="projects/" />
       <h3 className="sub-title">{t.section.projectsWork}</h3>
       <div className="case-list">
         {work.map((p, i) => (

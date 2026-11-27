@@ -31,8 +31,6 @@ export interface Project {
   did?: Localized<string[]>
   result?: Localized
   period?: Localized
-  /** Which abstract illustration to draw. */
-  art: 'radar' | 'campaigns' | 'audit' | 'none'
 }
 
 export interface Career {
@@ -41,7 +39,7 @@ export interface Career {
 }
 
 export interface Services {
-  items: Array<{ id: string; title: Localized; body: Localized; tags: string[] }>
+  items: Array<{ id: string; file: string; title: Localized; body: Localized; tags: string[] }>
   steps: Array<{ title: Localized; body: Localized }>
 }
 

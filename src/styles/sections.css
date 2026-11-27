@@ -500,41 +500,10 @@ main,
 }
 
 /* Career ladder, stats */
-.ladder {
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
 
-.ladder-step {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 16px 18px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--surface) 86%, transparent);
-}
 
-.ladder-step.current {
-  border-color: var(--accent);
-  box-shadow: 0 10px 34px -16px var(--glow);
-}
 
-.ladder-role {
-  font-weight: 800;
-}
 
-.ladder-date {
-  color: var(--accent-text);
-  font-weight: 700;
-  font-size: 0.85rem;
-  font-variant-numeric: tabular-nums;
-}
 
 .stats {
   display: grid;
@@ -583,28 +552,9 @@ main,
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
 }
 
-.case.flip .case-art {
-  order: 2;
-}
 
-.case-art {
-  margin: 0;
-}
 
-.case-art figcaption {
-  margin-top: 8px;
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-align: center;
-}
 
-.project-art {
-  width: 100%;
-  height: auto;
-  display: block;
-  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
-  border-radius: 14px;
-}
 
 .case header {
   display: flex;
@@ -641,12 +591,6 @@ main,
   margin: 2px 0 0;
 }
 
-.did-list {
-  margin: 4px 0 0;
-  padding-left: 1.1em;
-  display: grid;
-  gap: 4px;
-}
 
 /* Services */
 .service-grid {
@@ -896,7 +840,6 @@ main,
     --column: 100%;
   }
 
-  .ladder,
   .stats,
   .service-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -912,9 +855,6 @@ main,
     grid-template-columns: 1fr;
   }
 
-  .case.flip .case-art {
-    order: 0;
-  }
 
   .header-bar {
     flex-wrap: wrap;
@@ -975,9 +915,6 @@ main,
     grid-template-columns: 1fr;
   }
 
-  .ladder-step {
-    padding: 12px 14px;
-  }
 
   .case {
     padding: 18px;

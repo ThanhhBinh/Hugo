@@ -4,6 +4,7 @@ export const services: Services = {
   items: [
     {
       id: 'web',
+      file: 'web.tsx',
       title: { en: 'Web apps', vi: 'Ứng dụng web' },
       body: {
         en: 'Dashboards, admin tools and websites that are fast and easy to maintain.',
@@ -13,6 +14,7 @@ export const services: Services = {
     },
     {
       id: 'apps',
+      file: 'apps.dart',
       title: { en: 'Mobile & desktop apps', vi: 'App mobile & desktop' },
       body: {
         en: 'One codebase for Android, iOS, Windows and macOS.',
@@ -22,6 +24,7 @@ export const services: Services = {
     },
     {
       id: 'automation',
+      file: 'auto.sh',
       title: { en: 'Scripts & automation', vi: 'Script & tự động hoá' },
       body: {
         en: 'Small tools that replace repetitive manual work.',
@@ -31,6 +34,7 @@ export const services: Services = {
     },
     {
       id: 'it',
+      file: 'it.conf',
       title: { en: 'Email, domains & IT support', vi: 'Email, tên miền & hỗ trợ IT' },
       body: {
         en: 'Setting up and fixing email, domains and everyday IT problems.',

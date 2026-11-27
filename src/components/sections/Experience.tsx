@@ -32,7 +32,7 @@ export function Experience() {
 
   return (
     <section id="experience" className="section" data-shape="dots" aria-labelledby="experience-title">
-      <SectionHeading index="04" title={t.section.experience} id="experience-title" />
+      <SectionHeading index="04" title={t.section.experience} id="experience-title" file="experience.md" />
       <ol className="timeline" ref={listRef}>
         {experience.map((item, i) => (
           <Reveal as="li" key={item.id} index={i} className="timeline-item">

@@ -12,6 +12,7 @@ import {
   PerspectiveCamera,
   PointsMaterial,
 } from 'three'
+import { onBeat } from '../lib/beat'
 import { dotsShape, nearestLinks, sortByHeight, sphereShape } from './shapes'
 import { fieldScale, readSections, sceneOpacity, shapeWeights, targetShapeValue } from './shapeTarget'
 
@@ -76,6 +77,7 @@ export function NetworkShape() {
 
   const state = useRef({
     value: 0,
+    pulse: 0, // 1 right after a beat, fades to 0
     opacity: '',
     spin: 0,
     time: 0,
@@ -95,12 +97,16 @@ export function NetworkShape() {
       state.current.pointer.y = (e.clientY / window.innerHeight) * 2 - 1
     }
     const onTheme = () => setLook(themeLook())
+    const offBeat = onBeat(() => {
+      state.current.pulse = 1
+    })
     window.addEventListener('pointermove', onMove, { passive: true })
     window.addEventListener('themechange', onTheme)
     state.current.value = targetShapeValue(readSections(), window.innerHeight)
     return () => {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('themechange', onTheme)
+      offBeat()
     }
   }, [])
 
@@ -115,6 +121,7 @@ export function NetworkShape() {
     }
     const dt = Math.min(delta, 0.05)
     s.time += dt
+    s.pulse = Math.max(0, s.pulse - dt / 0.7)
     s.value = MathUtils.lerp(s.value, targetShapeValue(readSections(), window.innerHeight), 1 - Math.pow(0.002, dt))
     const w = shapeWeights(s.value)
     const opacity = sceneOpacity(w[1]).toFixed(2)
@@ -122,7 +129,7 @@ export function NetworkShape() {
       s.opacity = opacity
       document.documentElement.style.setProperty('--scene-opacity', opacity)
     }
-    if (nodeMat.current) nodeMat.current.size = MathUtils.lerp(0.2, 0.13, w[1])
+    if (nodeMat.current) nodeMat.current.size = MathUtils.lerp(0.2, 0.13, w[1]) * (1 + 0.7 * s.pulse)
     if (packetMat.current) packetMat.current.opacity = w[0]
 
     // Mix the shapes. The sphere spins on its own; the dots drift upward slowly as you scroll.

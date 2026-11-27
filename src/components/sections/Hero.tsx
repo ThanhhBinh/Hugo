@@ -1,8 +1,11 @@
+import { useMemo, useState } from 'react'
 import avatar320 from '../../assets/images/hugo-avatar-320.webp'
 import avatar720 from '../../assets/images/hugo-avatar-720.webp'
 import { profile } from '../../content'
 import { useLanguage } from '../../i18n/useLanguage'
+import { beat } from '../../lib/beat'
 import { cvHref } from '../../lib/cv'
+import { Terminal } from '../ui/Terminal'
 
 /** Highlights the name "Hugo" inside the hero sentence. */
 function withName(text: string) {
@@ -19,18 +22,29 @@ function withName(text: string) {
 
 export function Hero() {
   const { t, lang } = useLanguage()
+  const [ready, setReady] = useState(false)
+  // The terminal types its lines; when it is done the 3D scene beats once and the buttons appear.
+  const lines = useMemo(
+    () => [
+      { cmd: 'whoami', out: <><span className="ok">{profile.name.toLowerCase()}</span> — {profile.fullName}</> },
+      { cmd: 'cat role.txt', out: t.hero.keywords },
+      { cmd: 'cat stack.txt', out: 'React · TypeScript · Flutter' },
+    ],
+    [t],
+  )
   return (
     <section id="hero" className="hero" data-shape="sphere" aria-labelledby="hero-title">
       <div className="hero-text">
+        <Terminal
+          lines={lines}
+          onDone={() => {
+            setReady(true)
+            beat()
+          }}
+        />
         <p className="eyebrow">{t.hero.eyebrow}</p>
         <h1 id="hero-title">{withName(t.hero.title)}</h1>
-        <p className="hero-sub">
-          <strong>{profile.fullName}</strong> · {t.hero.subtitle}
-        </p>
-        <p className="hero-keywords">
-          {t.hero.keywords} · <span>React · TypeScript · Flutter</span>
-        </p>
-        <div className="hero-actions">
+        <div className={`hero-actions${ready ? ' ready' : ''}`}>
           <a className="btn btn-primary" href={cvHref(lang)} download>{t.hero.downloadCv}</a>
           <a className="btn btn-ghost" href="#contact">{t.hero.hire}</a>
         </div>

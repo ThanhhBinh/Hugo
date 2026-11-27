@@ -8,10 +8,10 @@ export function Contact() {
   const { t, pick, lang } = useLanguage()
   return (
     <section id="contact" className="section contact" data-shape="dots" aria-labelledby="contact-title">
-      <SectionHeading index="08" title={t.section.contact} id="contact-title" />
+      <SectionHeading index="08" title={t.section.contact} id="contact-title" file="contact.sh" />
       <Reveal as="p" className="contact-lead">{t.contact.lead}</Reveal>
       <Reveal index={1}>
-        <div className="hero-actions">
+        <div className="contact-actions">
           <a className="btn btn-primary btn-lg" href={primaryContactHref(contact)}>{t.contact.sendEmail} →</a>
           <a className="btn btn-ghost btn-lg" href={cvHref(lang)} download>{t.hero.downloadCv}</a>
         </div>
