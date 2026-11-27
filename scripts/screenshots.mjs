@@ -76,6 +76,15 @@ for (const c of CASES) {
   }
   await page.evaluate(() => document.activeElement?.blur())
 
+  // Behind the content the 3D layer must be faint (opacity <= 0.35).
+  await page.evaluate(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'instant' }))
+  await page.waitForTimeout(2500)
+  const layerOpacity = await page.evaluate(() => Number(getComputedStyle(document.querySelector('.scene-layer')).opacity))
+  if (layerOpacity > 0.35) {
+    console.error(`${c.name}: 3D layer opacity ${layerOpacity} is above 0.35 behind the content`)
+    failed = true
+  }
+
   for (const id of SECTIONS) {
     await page.evaluate((i) => document.getElementById(i)?.scrollIntoView({ behavior: 'instant' }), id)
     await page.waitForTimeout(1200)

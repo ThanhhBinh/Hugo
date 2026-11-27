@@ -13,7 +13,7 @@ import {
   PointsMaterial,
 } from 'three'
 import { dotsShape, nearestLinks, sortByHeight, sphereShape } from './shapes'
-import { readSections, sceneOpacity, shapeWeights, targetShapeValue } from './shapeTarget'
+import { fieldScale, readSections, sceneOpacity, shapeWeights, targetShapeValue } from './shapeTarget'
 
 const NODES = 64
 const RADIUS = 2.6
@@ -76,6 +76,7 @@ export function NetworkShape() {
 
   const state = useRef({
     value: 0,
+    opacity: '',
     spin: 0,
     time: 0,
     tilt: { x: 0, y: 0 },
@@ -116,7 +117,11 @@ export function NetworkShape() {
     s.time += dt
     s.value = MathUtils.lerp(s.value, targetShapeValue(readSections(), window.innerHeight), 1 - Math.pow(0.002, dt))
     const w = shapeWeights(s.value)
-    document.documentElement.style.setProperty('--scene-opacity', sceneOpacity(w[1]).toFixed(3))
+    const opacity = sceneOpacity(w[1]).toFixed(2)
+    if (opacity !== s.opacity) {
+      s.opacity = opacity
+      document.documentElement.style.setProperty('--scene-opacity', opacity)
+    }
     if (nodeMat.current) nodeMat.current.size = MathUtils.lerp(0.2, 0.13, w[1])
     if (packetMat.current) packetMat.current.opacity = w[0]
 
@@ -127,14 +132,16 @@ export function NetworkShape() {
     const sin = Math.sin(s.spin)
     const pos = geo.nodes.getAttribute('position') as BufferAttribute
     const p = pos.array as Float32Array
+    const visibleH = 2 * Math.tan(MathUtils.degToRad(cam.fov / 2)) * cam.position.z
+    const [sx, sy] = fieldScale(visibleH * cam.aspect, visibleH, FIELD)
     const [S, D] = data.shapes as [typeof data.shapes[0], typeof data.shapes[0]]
     for (let i = 0; i < NODES; i++) {
       const a = S[i]!
       const d = D[i]!
       // Wrap the drifting dots inside the field so they never leave the screen.
       const dy = ((((d[1] + drift + FIELD.h / 2) % FIELD.h) + FIELD.h) % FIELD.h) - FIELD.h / 2
-      p[i * 3] = w[0] * (a[0] * cos - a[2] * sin) + w[1] * d[0]
-      p[i * 3 + 1] = w[0] * a[1] + w[1] * dy
+      p[i * 3] = w[0] * (a[0] * cos - a[2] * sin) + w[1] * d[0] * sx
+      p[i * 3 + 1] = w[0] * a[1] + w[1] * dy * sy
       p[i * 3 + 2] = w[0] * (a[0] * sin + a[2] * cos) + w[1] * d[2]
     }
     pos.needsUpdate = true

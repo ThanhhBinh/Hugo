@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { dotsShape, nearestLinks, sphereShape } from '../src/scene/shapes'
-import { sceneOpacity, shapeWeights, targetShapeValue } from '../src/scene/shapeTarget'
+import { fieldScale, sceneOpacity, shapeWeights, targetShapeValue } from '../src/scene/shapeTarget'
 
 const len = (p: number[]) => Math.hypot(...p)
 
@@ -56,5 +56,16 @@ describe('targetShapeValue', () => {
   })
   test('no sections means sphere', () => {
     expect(targetShapeValue([], 800)).toBe(0)
+  })
+})
+
+describe('fieldScale', () => {
+  test('stretches the dots field to cover a tall phone screen and a wide desktop screen', () => {
+    const [sx, sy] = fieldScale(6.2, 13.5, { w: 16, h: 10 })
+    expect(sy).toBeGreaterThan(1.3)
+    expect(sx * 16).toBeGreaterThanOrEqual(6.2)
+    const [wx, wy] = fieldScale(17.7, 7.5, { w: 16, h: 10 })
+    expect(wx * 16).toBeGreaterThanOrEqual(17.7)
+    expect(wy * 10).toBeGreaterThanOrEqual(7.5)
   })
 })

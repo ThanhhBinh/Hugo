@@ -841,6 +841,10 @@ main,
   grid-template-columns: 90px 1fr;
 }
 
+.contact-list a {
+  overflow-wrap: anywhere;
+}
+
 .contact-list span {
   color: var(--muted);
 }

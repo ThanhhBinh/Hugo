@@ -32,6 +32,11 @@ export function sceneOpacity(dotsWeight: number): number {
   return 1 - 0.7 * Math.min(1, Math.max(0, dotsWeight))
 }
 
+/** Scale factors [x, y] that make a dots box of `field` size cover the visible area (with a small margin). */
+export function fieldScale(visibleW: number, visibleH: number, field: { w: number; h: number }): [number, number] {
+  return [Math.max(1, (visibleW * 1.1) / field.w), Math.max(1, (visibleH * 1.1) / field.h)]
+}
+
 /** Read the shapes of the sections on the page (elements with data-shape). */
 export function readSections(): Array<{ shape: ShapeName; top: number }> {
   return Array.from(document.querySelectorAll<HTMLElement>('[data-shape]')).map((el) => ({
