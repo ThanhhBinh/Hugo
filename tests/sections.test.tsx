@@ -35,6 +35,11 @@ describe('App sections', () => {
     expect(container.querySelector('#contact')?.getAttribute('data-shape')).toBe('ring')
   })
 
+  test('education section shows the ongoing university study', () => {
+    render(<App />)
+    expect(screen.getByText('Ho Chi Minh City University of Technology and Engineering (HCM-UTE)')).toBeInTheDocument()
+  })
+
   test('header avatar is labelled and no phone number appears', () => {
     const { container } = render(<App />)
     expect(screen.getAllByRole('img', { name: 'Hugo' }).length).toBeGreaterThan(0)

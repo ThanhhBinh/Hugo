@@ -34,6 +34,8 @@ export interface ToolGroup {
 }
 
 export interface Education {
+  /** Degree in progress, shown first. */
+  studying?: { school: Localized; program: Localized; status: Localized }
   school: Localized
   major: Localized
   period: string

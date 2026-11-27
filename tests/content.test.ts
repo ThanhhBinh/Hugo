@@ -55,9 +55,15 @@ describe('content', () => {
     expect(experience[0]!.summary.en).not.toMatch(/SaleAudit\) for web, mobile and desktop/)
   })
 
+  test('shows the current bridge degree at HCM-UTE as ongoing', () => {
+    expect(education.studying?.school.vi).toBe('Trường Đại học Công nghệ Kỹ thuật TP.HCM (HCM-UTE)')
+    expect(education.studying?.school.en).toBe('Ho Chi Minh City University of Technology and Engineering (HCM-UTE)')
+    expect(education.studying?.status.en).toMatch(/currently studying/i)
+  })
+
   test('education keeps the stated facts', () => {
     expect(education.gpa).toBe('9.12')
-    expect(education.period).toBe('2022 – 2025')
+    expect(education.period).toBe('2022 – 2024')
     expect(education.certs).toEqual([{ year: '2024', label: 'Aptis ESOL B2' }])
   })
 })

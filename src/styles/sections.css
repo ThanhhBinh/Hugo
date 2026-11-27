@@ -516,6 +516,14 @@ main,
   align-items: center;
 }
 
+.school + .school {
+  margin-top: 14px;
+}
+
+.studying {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+}
+
 .school h3 {
   font-size: 1.2rem;
   margin-bottom: 4px;
@@ -527,7 +535,7 @@ main,
 
 .gpa {
   display: grid;
-  text-align: right;
+  text-align: left;
 }
 
 .gpa-value {

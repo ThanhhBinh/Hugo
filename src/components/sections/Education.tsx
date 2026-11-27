@@ -8,7 +8,16 @@ export function Education() {
   return (
     <section id="education" className="section" data-shape="h" aria-labelledby="education-title">
       <SectionHeading index="05" title={t.section.education} id="education-title" />
-      <Reveal className="card school">
+      {education.studying && (
+        <Reveal className="card school studying">
+          <div>
+            <p className="period">● {pick(education.studying.status)}</p>
+            <h3>{pick(education.studying.school)}</h3>
+            <p>{pick(education.studying.program)}</p>
+          </div>
+        </Reveal>
+      )}
+      <Reveal className="card school" index={1}>
         <div>
           <h3>{pick(education.school)}</h3>
           <p>{pick(education.major)}</p>

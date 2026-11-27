@@ -59,7 +59,8 @@ Ghi chú: dòng có **[Claude đề xuất]** là quyết định Claude tự đ
 - IT: hỗ trợ IT, email và tên miền
 
 **Học vấn và thành tích**
-- Cao đẳng Công Thương TP.HCM, chuyên ngành Lập trình web, 2022–2025. Điểm trung bình 9.12 (2022–2024), top 4 Khoa.
+- Đang học liên thông đại học tại Trường Đại học Công nghệ Kỹ thuật TP.HCM (HCM-UTE) (Hugo xác nhận 27/11).
+- Cao đẳng Công Thương TP.HCM, chuyên ngành Lập trình web, 2022–2024 (tốt nghiệp 2024, Hugo xác nhận). Điểm trung bình 9.12 (2022–2024), top 4 Khoa.
 - Học bổng sinh viên xuất sắc (2023). Danh hiệu "Sinh viên Tình nguyện Xuất sắc" (2023).
 - Chứng chỉ Aptis ESOL B2 (2024). CV gốc ghi nhầm là "Aptist esol".
 - Hoạt động: CLB Lập trình viên (2022–nay); tổ chức workshop "Lập trình cơ bản với JavaScript" (3/2024).

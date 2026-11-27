@@ -1,12 +1,20 @@
 import type { Education } from './types'
 
 export const education: Education = {
+  studying: {
+    school: {
+      en: 'Ho Chi Minh City University of Technology and Engineering (HCM-UTE)',
+      vi: 'Trường Đại học Công nghệ Kỹ thuật TP.HCM (HCM-UTE)',
+    },
+    program: { en: 'Bachelor bridge program (college to university)', vi: 'Liên thông đại học' },
+    status: { en: 'Currently studying', vi: 'Đang học' },
+  },
   school: {
     en: 'Ho Chi Minh City College of Industry and Trade',
     vi: 'Cao đẳng Công Thương TP. Hồ Chí Minh',
   },
   major: { en: 'Information Technology · Web programming', vi: 'Công nghệ thông tin · Lập trình web' },
-  period: '2022 – 2025',
+  period: '2022 – 2024',
   gpa: '9.12',
   gpaNote: { en: '2022–2024 · top 4 of the faculty', vi: '2022–2024 · top 4 của Khoa' },
   awards: [
