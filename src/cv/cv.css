@@ -1,0 +1,96 @@
+@page {
+  size: A4;
+  margin: 14mm 15mm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #17171a;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 10pt;
+  line-height: 1.45;
+}
+
+.cv {
+  max-width: 180mm;
+  margin: 0 auto;
+}
+
+.cv-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 3px solid #ffc21a;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.cv-head img {
+  border-radius: 50%;
+  border: 3px solid #ffc21a;
+}
+
+.cv h1 {
+  margin: 0;
+  font-size: 20pt;
+}
+
+.cv-role {
+  margin: 2px 0;
+  font-weight: 700;
+  color: #8a5f00;
+}
+
+.cv-contact {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 9pt;
+}
+
+.cv h2 {
+  margin: 12px 0 4px;
+  font-size: 10.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8a5f00;
+  border-bottom: 1px solid #e6dcc6;
+  padding-bottom: 2px;
+}
+
+.cv p {
+  margin: 0 0 4px;
+}
+
+.cv ul {
+  margin: 2px 0 4px;
+  padding-left: 16px;
+}
+
+.cv-item {
+  break-inside: avoid;
+  margin-bottom: 6px;
+}
+
+.cv-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cv-period {
+  color: #55555c;
+  white-space: nowrap;
+  font-size: 9pt;
+}
+
+.cv-tools {
+  list-style: none;
+  padding: 0 !important;
+}
