@@ -3,7 +3,7 @@
    fixed 3D scene. Phones: one column, the scene sits behind the text. */
 :root {
   --gutter: clamp(20px, 6vw, 88px);
-  --column: min(640px, 52vw);
+  --column: min(640px, 52vw, calc(74vw - min(18vh, 170px) - var(--gutter) - 32px));
 }
 
 main,
@@ -641,12 +641,31 @@ main,
     --column: 100%;
   }
 
-  .main-nav {
-    display: none;
+  .header-bar {
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding-bottom: 8px;
   }
 
   .header-tools {
     margin-left: auto;
+  }
+
+  .main-nav {
+    order: 3;
+    flex-basis: 100%;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main-nav a {
+    flex: none;
   }
 
   .hero {

@@ -8,8 +8,8 @@ export const experience: ExperienceItem[] = [
     role: 'Lead Front-end',
     org: { en: 'Outsourcing team', vi: 'Team outsourcing' },
     summary: {
-      en: 'Lead the front-end and build full-stack products (TeleRadar, AdOps, SaleAudit) for web, mobile and desktop. Also take care of IT support, email and domains for the team.',
-      vi: 'Dẫn dắt phần front-end và làm full-stack các sản phẩm (TeleRadar, AdOps, SaleAudit) cho web, mobile và desktop. Kiêm hỗ trợ IT, quản lý email và tên miền cho team.',
+      en: 'Lead the front-end and build full-stack products (TeleRadar, AdOps, SaleAudit), working across web, mobile and desktop. Also take care of IT support, email and domains for the team.',
+      vi: 'Dẫn dắt phần front-end và làm full-stack các sản phẩm (TeleRadar, AdOps, SaleAudit), làm việc trên cả web, mobile và desktop. Kiêm hỗ trợ IT, quản lý email và tên miền cho team.',
     },
   },
   {
@@ -18,8 +18,8 @@ export const experience: ExperienceItem[] = [
     role: 'Junior Developer',
     org: { en: 'InspiLab · travel technology (Inspitrip)', vi: 'InspiLab · công nghệ du lịch (Inspitrip)' },
     summary: {
-      en: 'Developed product features as part of a small engineering team, from idea to release.',
-      vi: 'Phát triển tính năng sản phẩm trong một team kỹ sư nhỏ, từ ý tưởng tới khi phát hành.',
+      en: 'Developed product features as part of a small engineering team.',
+      vi: 'Phát triển tính năng sản phẩm trong một team kỹ sư nhỏ.',
     },
   },
   {

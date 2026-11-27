@@ -49,6 +49,12 @@ describe('content', () => {
     expect(primaryContactHref({ ...contact, email: 'a@b.c' })).toBe('mailto:a@b.c')
   })
 
+  test('experience makes no claims beyond what Hugo stated', () => {
+    const text = JSON.stringify(experience)
+    expect(text).not.toMatch(/idea to release|ý tưởng tới khi phát hành/i)
+    expect(experience[0]!.summary.en).not.toMatch(/SaleAudit\) for web, mobile and desktop/)
+  })
+
   test('education keeps the stated facts', () => {
     expect(education.gpa).toBe('9.12')
     expect(education.period).toBe('2022 – 2025')

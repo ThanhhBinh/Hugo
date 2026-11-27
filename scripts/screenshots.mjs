@@ -10,7 +10,21 @@ const CASES = [
   { name: 'desktop-light', viewport: { width: 1440, height: 900 }, colorScheme: 'light', lang: 'en' },
   { name: 'mobile-dark', viewport: { width: 390, height: 844 }, colorScheme: 'dark', lang: 'en' },
   { name: 'narrow-vi', viewport: { width: 360, height: 780 }, colorScheme: 'light', lang: 'vi' },
+  { name: 'tall-960-vi', viewport: { width: 960, height: 1000 }, colorScheme: 'dark', lang: 'vi' },
 ]
+
+function contrast(rgbA, rgbB) {
+  const lum = (rgb) => {
+    const [r, g, b] = rgb.map((v) => {
+      const c = v / 255
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+    })
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+  }
+  const [a, b] = [lum(rgbA), lum(rgbB)].sort((x, y) => y - x)
+  return (a + 0.05) / (b + 0.05)
+}
+const parseRgb = (s) => s.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number)
 
 mkdirSync('screenshots', { recursive: true })
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] })
@@ -24,6 +38,42 @@ for (const c of CASES) {
   })
   await page.goto(`${URL}?lang=${c.lang}`)
   await page.waitForTimeout(1500)
+
+  // The hero avatar must never cover the hero text.
+  const overlap = await page.evaluate(() => {
+    const a = document.querySelector('.hero-avatar').getBoundingClientRect()
+    return [...document.querySelectorAll('.hero-text > *')].some((el) => {
+      const t = el.getBoundingClientRect()
+      return t.right > a.left && t.left < a.right && t.bottom > a.top && t.top < a.bottom
+    })
+  })
+  if (overlap) {
+    console.error(`${c.name}: hero avatar covers the hero text`)
+    failed = true
+  }
+
+  // A menu must be reachable at every size.
+  const navVisible = await page.evaluate(() => {
+    const nav = document.querySelector('.main-nav')
+    return !!nav && nav.getBoundingClientRect().height > 0 && getComputedStyle(nav).display !== 'none'
+  })
+  if (!navVisible) {
+    console.error(`${c.name}: no visible menu`)
+    failed = true
+  }
+
+  // Keyboard focus ring needs 3:1 against the page background.
+  await page.keyboard.press('Tab')
+  await page.keyboard.press('Tab')
+  const [outline, bg] = await page.evaluate(() => [
+    getComputedStyle(document.activeElement).outlineColor,
+    getComputedStyle(document.body).backgroundColor,
+  ])
+  const ratio = contrast(parseRgb(outline), parseRgb(bg))
+  if (ratio < 3) {
+    console.error(`${c.name}: focus ring contrast ${ratio.toFixed(2)}:1 is below 3:1`)
+    failed = true
+  }
   for (const id of SECTIONS) {
     await page.evaluate((i) => document.getElementById(i)?.scrollIntoView({ behavior: 'instant' }), id)
     await page.waitForTimeout(1200)
