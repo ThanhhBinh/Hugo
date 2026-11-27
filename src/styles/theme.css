@@ -1,0 +1,31 @@
+/* Colours follow Hugo's avatar: yellow on black. */
+:root,
+[data-theme='dark'] {
+  --bg: #0e0e10;
+  --surface: #17171b;
+  --surface-2: #1f1f24;
+  --text: #f3f3f1;
+  --muted: #a9a9b0;
+  --line: #2a2a30;
+  --accent: #ffc21a; /* fills, 3D, highlights */
+  --accent-text: #ffc21a; /* accent used as text */
+  --accent-ink: #141414; /* text on top of an accent fill */
+  --glow: rgba(255, 194, 26, 0.32);
+  --header-bg: rgba(14, 14, 16, 0.72);
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: #fbf6ea;
+  --surface: #ffffff;
+  --surface-2: #f3ecdb;
+  --text: #17171a;
+  --muted: #55555c;
+  --line: #e6dcc6;
+  --accent: #ffc21a;
+  --accent-text: #8a5f00;
+  --accent-ink: #141414;
+  --glow: rgba(255, 194, 26, 0.45);
+  --header-bg: rgba(251, 246, 234, 0.78);
+  color-scheme: light;
+}
