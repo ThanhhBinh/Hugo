@@ -17,6 +17,11 @@ Chỉ đổi giao diện và chuyển động. Nội dung (`src/content/*`), ng�
 - Dự án: khung cửa sổ, nửa là vấn đề/kết quả/công nghệ, nửa là "diff": dòng `+` xanh = việc đã làm, dòng `-` đỏ gạch = vấn đề đã xoá.
 - Dịch vụ, kinh nghiệm, mục tiêu, học vấn, liên hệ: cửa sổ có thanh tiêu đề tên file.
 - Chuyển động: gõ chữ, đếm số, hiện dần khi cuộn, nhấc thẻ khi rê chuột. `prefers-reduced-motion`: tất cả tắt, nội dung hiện ngay.
+- Chuyển động liên kết (một câu chuyện, không phải hiệu ứng rời rạc):
+  - Banner chạy theo chuỗi: terminal gõ xong từng lệnh → dòng kết quả hiện → khi gõ xong `stack.txt` thì quả cầu 3D "nhịp" một lần (sự kiện `hugo:beat`) → hai nút CV và Thuê mình hiện ra.
+  - Một đường git dọc bên trái cả trang, vẽ dần theo thanh cuộn; mỗi section là một commit (chấm tròn) sáng lên khi tới; tab trên header sáng cùng lúc.
+  - Mỗi lần một commit sáng, nền chấm 3D cũng nhịp nhẹ một lần (cùng sự kiện `hugo:beat`).
+  - Trong một section, thứ tự cố định: tiêu đề → khung hiện → nội dung chạy (dòng `+` lần lượt, số đếm) → dòng `-` gạch cuối cùng.
 - Giữ: AA contrast, focus ring, không cuộn ngang ở 360px, mọi chữ nằm trong i18n.
 
 ## Ngoài phạm vi

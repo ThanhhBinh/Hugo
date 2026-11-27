@@ -8,6 +8,8 @@ Cài `@fontsource-variable/jetbrains-mono`, `@fontsource/ibm-plex-sans` (400/600
 ### Task 2: Motion hooks (TDD)
 `useInView(ref)` (một lần, không IO thì true), `useCountUp(target, active)` (số thập phân giữ nguyên, reduced motion → ngay giá trị cuối), `Terminal` component nhận `lines: Array<{cmd, out}>`, gõ từng ký tự, reduced motion → hiện đủ ngay. Test: Terminal hiện đủ lời ở chế độ giảm chuyển động; useCountUp trả về đích khi giảm chuyển động; giá trị "4–6" hiển thị nguyên.
 
+Thêm vào Task 2: `beat()` (phát `CustomEvent('hugo:beat')`), Terminal gọi `onDone`. Task 3: Hero hiện nút sau `onDone` và gọi `beat()`; `GitRail` (đường dọc, `--fill` theo cuộn, chấm sáng khi section tới và gọi `beat()`); `NetworkShape` nghe `hugo:beat` để tăng kích thước/độ sáng điểm trong ~0.6s.
+
 ### Task 3: Restyle sections
 Hero (Terminal, nội dung từ `profile`, `t.hero.*`), Highlights (git log từ `career.ladder`, ô số đếm), Projects (diff), khung `Window` dùng chung (thanh tiêu đề + tên file) cho Services/Experience/Goals/Education/Contact, Header dạng tab. Giữ test hiện có xanh (cập nhật chỗ đổi cấu trúc).
 
