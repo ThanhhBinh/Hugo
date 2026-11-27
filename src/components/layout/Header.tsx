@@ -4,7 +4,7 @@ import { useLanguage } from '../../i18n/useLanguage'
 import { LanguageSwitch } from '../ui/LanguageSwitch'
 import { ThemeToggle } from '../ui/ThemeToggle'
 
-export const NAV_IDS = ['about', 'experience', 'projects', 'toolbox', 'education', 'contact'] as const
+const NAV_IDS = ['about', 'experience', 'projects', 'toolbox', 'education', 'contact'] as const
 
 export function Header() {
   const { t } = useLanguage()
