@@ -1,7 +1,8 @@
 import type { Contact } from './types'
 
 export const contact: Contact = {
-  // Add your email here when you want it on the site, e.g. email: 'you@example.com'
+  email: 'thanhhbinh0501@gmail.com',
+  // linkedin: 'https://www.linkedin.com/in/...',  // add when ready
   github: 'https://github.com/ThanhhBinh',
   location: { en: 'Ho Chi Minh City, Vietnam', vi: 'TP. Hồ Chí Minh' },
 }

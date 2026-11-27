@@ -19,8 +19,19 @@ export interface UiStrings {
     toolbox: string
     education: string
     contact: string
+    services: string
+    goals: string
   }
-  hero: { eyebrow: string; title: string; subtitle: string; cta: string; ctaSecondary: string }
+  hero: {
+    eyebrow: string
+    title: string
+    subtitle: string
+    cta: string
+    ctaSecondary: string
+    keywords: string
+    downloadCv: string
+    hire: string
+  }
   section: {
     about: string
     experience: string
@@ -33,9 +44,23 @@ export interface UiStrings {
     certs: string
     activities: string
     contact: string
+    highlights: string
+    services: string
+    process: string
+    goals: string
   }
-  labels: { problem: string; solution: string; role: string; promoted: string; gpa: string }
-  contact: { lead: string; email: string; github: string; location: string }
+  labels: {
+    problem: string
+    solution: string
+    role: string
+    promoted: string
+    gpa: string
+    did: string
+    result: string
+    illustration: string
+    team: string
+  }
+  contact: { lead: string; email: string; github: string; location: string; sendEmail: string }
   switch: { language: string; themeToLight: string; themeToDark: string }
   footer: { note: string }
   skip: string

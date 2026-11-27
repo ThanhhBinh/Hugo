@@ -6,6 +6,9 @@ export const projects: Project[] = [
     id: 'teleradar',
     name: 'TeleRadar',
     group: 'work',
+    did: { en: ['Designed and built the dashboard UI with React and TypeScript.', 'Built the data collection, processing and API behind it.', 'Deployed and maintain it.'], vi: ['Thiết kế và xây giao diện dashboard bằng React và TypeScript.', 'Làm phần thu thập, xử lý dữ liệu và API phía sau.', 'Triển khai và bảo trì.'] },
+    result: { en: 'Everything in one place, no more following each group by hand.', vi: 'Thông tin về một chỗ, không còn theo dõi tay từng nhóm.' },
+    art: 'radar',
     problem: {
       en: 'Following Telegram by hand was slow and easy to miss things.',
       vi: 'Theo dõi Telegram thủ công vừa chậm vừa dễ sót.',
@@ -21,6 +24,9 @@ export const projects: Project[] = [
     id: 'adops',
     name: 'AdOps',
     group: 'work',
+    did: { en: ['Built one central interface to manage campaigns.', 'Built the API and storage for campaign data.', 'Led the front-end and reviewed code.'], vi: ['Xây giao diện tập trung để quản lý chiến dịch.', 'Làm API và lưu trữ dữ liệu chiến dịch.', 'Dẫn dắt front-end và review code.'] },
+    result: { en: 'One single place to run campaigns.', vi: 'Một nơi duy nhất để vận hành chiến dịch.' },
+    art: 'campaigns',
     problem: {
       en: 'Ad campaigns were managed in many scattered places.',
       vi: 'Quảng cáo được quản lý rải rác ở nhiều nơi.',
@@ -36,6 +42,9 @@ export const projects: Project[] = [
     id: 'saleaudit',
     name: 'SaleAudit',
     group: 'work',
+    did: { en: ['Built the checking and reporting interface.', 'Built the automatic matching of sales data.', 'Deployed it.'], vi: ['Xây giao diện đối soát và báo cáo.', 'Làm phần xử lý, so khớp dữ liệu bán hàng tự động.', 'Triển khai.'] },
+    result: { en: 'Faster checking with fewer mistakes than by hand.', vi: 'Đối soát nhanh hơn, ít sai sót hơn làm tay.' },
+    art: 'audit',
     problem: {
       en: 'Checking sales figures by hand took time and caused mistakes.',
       vi: 'Đối soát số liệu bán hàng bằng tay mất thời gian và dễ sai.',
@@ -51,6 +60,7 @@ export const projects: Project[] = [
     id: 'school-shopee',
     name: 'Shopee sales management',
     group: 'school',
+    art: 'none',
     problem: {
       en: 'Sellers needed one place for orders, customers, vouchers and reports.',
       vi: 'Người bán cần một nơi quản lý đơn hàng, khách hàng, voucher và báo cáo.',
@@ -66,6 +76,7 @@ export const projects: Project[] = [
     id: 'school-backpack',
     name: 'Backpack shop management',
     group: 'school',
+    art: 'none',
     problem: {
       en: 'A backpack shop tracked sales and stock by hand.',
       vi: 'Cửa hàng ba lô quản lý bán hàng và tồn kho thủ công.',
@@ -81,6 +92,7 @@ export const projects: Project[] = [
     id: 'school-watch',
     name: 'Watch store management',
     group: 'school',
+    art: 'none',
     problem: {
       en: 'A watch store needed to run its online business in one system.',
       vi: 'Cửa hàng đồng hồ cần quản lý kinh doanh online trong một hệ thống.',

@@ -13,9 +13,9 @@ describe('App sections', () => {
     }
   })
 
-  test('the hero contact button points to GitHub while there is no email', () => {
+  test('the hero contact button opens an email to Hugo', () => {
     render(<App />)
-    expect(screen.getByRole('link', { name: en.hero.cta })).toHaveAttribute('href', 'https://github.com/ThanhhBinh')
+    expect(screen.getByRole('link', { name: en.hero.cta })).toHaveAttribute('href', 'mailto:thanhhbinh0501@gmail.com')
   })
 
   test('switching to Vietnamese changes the hero and the navigation', () => {

@@ -4,7 +4,8 @@ import type { ExperienceItem } from './types'
 export const experience: ExperienceItem[] = [
   {
     id: 'outsourcing-lead',
-    period: { en: '2025 – present', vi: '2025 – nay' },
+    period: { en: '03/2026 – present', vi: '03/2026 – nay' },
+    team: { en: 'Leading a front-end team of 4–6 people', vi: 'Dẫn dắt nhóm front-end 4–6 người' },
     role: 'Lead Front-end',
     org: { en: 'Outsourcing team', vi: 'Team outsourcing' },
     summary: {
@@ -13,8 +14,18 @@ export const experience: ExperienceItem[] = [
     },
   },
   {
+    id: 'middle',
+    period: { en: '04/2025 – 02/2026', vi: '04/2025 – 02/2026' },
+    role: 'Middle Developer',
+    org: { en: 'InspiLab, then the outsourcing team', vi: 'InspiLab, sau đó team outsourcing' },
+    summary: {
+      en: 'Took on larger features and more responsibility, and moved on to the outsourcing team as a Middle developer.',
+      vi: 'Nhận các tính năng lớn hơn và nhiều trách nhiệm hơn, rồi sang team outsourcing với vị trí Middle.',
+    },
+  },
+  {
     id: 'inspilab-junior',
-    period: { en: '01/2025 – 2025', vi: '01/2025 – 2025' },
+    period: { en: '01/2025 – 03/2025', vi: '01/2025 – 03/2025' },
     role: 'Junior Developer',
     org: { en: 'InspiLab · travel technology (Inspitrip)', vi: 'InspiLab · công nghệ du lịch (Inspitrip)' },
     summary: {

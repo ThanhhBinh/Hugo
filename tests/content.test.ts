@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { contact, education, experience, primaryContactHref, profile, projects, toolbox } from '../src/content'
+import { career, contact, education, experience, goals, primaryContactHref, profile, projects, services, toolbox } from '../src/content'
 
-const all = { profile, experience, projects, toolbox, education, contact }
+const all = { profile, experience, projects, toolbox, education, contact, career, services, goals }
 
 /** Walk every value; an object with exactly the keys en+vi is a Localized leaf. */
 function localizedLeaves(value: unknown, path = 'content'): Array<[string, unknown, unknown]> {
@@ -29,8 +29,36 @@ describe('content', () => {
   })
 
   test('experience is newest first with the stated periods', () => {
-    expect(experience.map((e) => e.id)).toEqual(['outsourcing-lead', 'inspilab-junior', 'inspilab-fresher'])
-    expect(experience.map((e) => e.period.en)).toEqual(['2025 – present', '01/2025 – 2025', '10/2024 – 12/2024'])
+    expect(experience.map((e) => e.id)).toEqual(['outsourcing-lead', 'middle', 'inspilab-junior', 'inspilab-fresher'])
+    expect(experience.map((e) => e.period.en)).toEqual([
+      '03/2026 – present',
+      '04/2025 – 02/2026',
+      '01/2025 – 03/2025',
+      '10/2024 – 12/2024',
+    ])
+    expect(experience[0]!.period.vi).toBe('03/2026 – nay')
+    expect(experience[0]!.team?.en).toMatch(/4–6/)
+  })
+
+  test('career ladder and stats match what Hugo stated', () => {
+    expect(career.ladder.map((l) => l.date)).toEqual(['10/2024', '01/2025', '04/2025', '03/2026'])
+    expect(career.ladder.map((l) => l.role)).toEqual(['Fresher', 'Junior', 'Middle', 'Lead Front-end'])
+    expect(career.stats.map((s) => s.value)).toEqual(['17', '4–6', '5', '9.12'])
+  })
+
+  test('each work project explains what Hugo did', () => {
+    for (const p of projects.filter((x) => x.group === 'work')) {
+      expect(p.did?.en, p.name).toHaveLength(3)
+      expect(p.did?.vi, p.name).toHaveLength(3)
+      expect(p.result?.en.length, p.name).toBeGreaterThan(0)
+    }
+    expect(projects.filter((x) => x.group === 'work').map((p) => p.art)).toEqual(['radar', 'campaigns', 'audit'])
+  })
+
+  test('services and goals have the planned shape', () => {
+    expect(services.items).toHaveLength(4)
+    expect(services.steps).toHaveLength(3)
+    expect(goals).toHaveLength(3)
   })
 
   test('projects include the three work projects and three school projects', () => {
@@ -45,6 +73,7 @@ describe('content', () => {
   })
 
   test('contact falls back to GitHub when there is no email', () => {
+    expect(primaryContactHref(contact)).toBe('mailto:thanhhbinh0501@gmail.com')
     expect(primaryContactHref({ ...contact, email: undefined })).toBe('https://github.com/ThanhhBinh')
     expect(primaryContactHref({ ...contact, email: 'a@b.c' })).toBe('mailto:a@b.c')
   })
