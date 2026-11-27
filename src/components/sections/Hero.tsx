@@ -1,7 +1,8 @@
 import avatar320 from '../../assets/images/hugo-avatar-320.webp'
 import avatar720 from '../../assets/images/hugo-avatar-720.webp'
-import { contact, primaryContactHref, profile } from '../../content'
+import { profile } from '../../content'
 import { useLanguage } from '../../i18n/useLanguage'
+import { cvHref } from '../../lib/cv'
 
 /** Highlights the name "Hugo" inside the hero sentence. */
 function withName(text: string) {
@@ -17,7 +18,7 @@ function withName(text: string) {
 }
 
 export function Hero() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   return (
     <section id="hero" className="hero" data-shape="sphere" aria-labelledby="hero-title">
       <div className="hero-text">
@@ -26,9 +27,12 @@ export function Hero() {
         <p className="hero-sub">
           <strong>{profile.fullName}</strong> · {t.hero.subtitle}
         </p>
+        <p className="hero-keywords">
+          {t.hero.keywords} · <span>React · TypeScript · Flutter</span>
+        </p>
         <div className="hero-actions">
-          <a className="btn btn-primary" href={primaryContactHref(contact)}>{t.hero.cta}</a>
-          <a className="btn btn-ghost" href="#experience">{t.hero.ctaSecondary} ↓</a>
+          <a className="btn btn-primary" href={cvHref(lang)} download>{t.hero.downloadCv}</a>
+          <a className="btn btn-ghost" href="#contact">{t.hero.hire}</a>
         </div>
       </div>
       <figure className="hero-avatar">

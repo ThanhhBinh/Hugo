@@ -1,16 +1,20 @@
 import { contact, primaryContactHref } from '../../content'
 import { useLanguage } from '../../i18n/useLanguage'
+import { cvHref } from '../../lib/cv'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeading } from '../ui/SectionHeading'
 
 export function Contact() {
-  const { t, pick } = useLanguage()
+  const { t, pick, lang } = useLanguage()
   return (
-    <section id="contact" className="section contact" data-shape="ring" aria-labelledby="contact-title">
-      <SectionHeading index="06" title={t.section.contact} id="contact-title" />
+    <section id="contact" className="section contact" data-shape="dots" aria-labelledby="contact-title">
+      <SectionHeading index="08" title={t.section.contact} id="contact-title" />
       <Reveal as="p" className="contact-lead">{t.contact.lead}</Reveal>
       <Reveal index={1}>
-        <a className="btn btn-primary btn-lg" href={primaryContactHref(contact)}>{t.hero.cta} →</a>
+        <div className="hero-actions">
+          <a className="btn btn-primary btn-lg" href={primaryContactHref(contact)}>{t.contact.sendEmail} →</a>
+          <a className="btn btn-ghost btn-lg" href={cvHref(lang)} download>{t.hero.downloadCv}</a>
+        </div>
       </Reveal>
       <Reveal as="ul" index={2} className="contact-list">
         {contact.email && (

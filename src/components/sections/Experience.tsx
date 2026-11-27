@@ -31,8 +31,8 @@ export function Experience() {
   }, [])
 
   return (
-    <section id="experience" className="section" data-shape="h" aria-labelledby="experience-title">
-      <SectionHeading index="02" title={t.section.experience} id="experience-title" />
+    <section id="experience" className="section" data-shape="dots" aria-labelledby="experience-title">
+      <SectionHeading index="04" title={t.section.experience} id="experience-title" />
       <ol className="timeline" ref={listRef}>
         {experience.map((item, i) => (
           <Reveal as="li" key={item.id} index={i} className="timeline-item">
@@ -41,6 +41,7 @@ export function Experience() {
               {item.role} <span className="org">· {pick(item.org)}</span>
             </h3>
             <p>{pick(item.summary)}</p>
+            {item.team && <p className="team">{t.labels.team}: {pick(item.team)}</p>}
             {item.highlight && <p className="badge">↑ {pick(item.highlight)}</p>}
           </Reveal>
         ))}

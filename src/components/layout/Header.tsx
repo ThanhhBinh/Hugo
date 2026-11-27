@@ -4,15 +4,15 @@ import { useLanguage } from '../../i18n/useLanguage'
 import { LanguageSwitch } from '../ui/LanguageSwitch'
 import { ThemeToggle } from '../ui/ThemeToggle'
 
-const NAV_IDS = ['about', 'experience', 'projects', 'toolbox', 'education', 'contact'] as const
+const NAV_IDS = ['projects', 'services', 'experience', 'toolbox', 'goals', 'education', 'contact'] as const
 
 export function Header() {
   const { t } = useLanguage()
-  const active = useActiveSection(['hero', ...NAV_IDS])
+  const active = useActiveSection(['hero', 'highlights', ...NAV_IDS])
 
   return (
     <header className="site-header">
-      <a className="skip-link" href="#about">{t.skip}</a>
+      <a className="skip-link" href="#highlights">{t.skip}</a>
       <div className="header-bar">
         <a className="brand" href="#hero">
           <img src={avatar} alt="Hugo" width="36" height="36" />

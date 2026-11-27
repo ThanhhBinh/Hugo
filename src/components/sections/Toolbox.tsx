@@ -7,8 +7,8 @@ import { SectionHeading } from '../ui/SectionHeading'
 export function Toolbox() {
   const { t, pick } = useLanguage()
   return (
-    <section id="toolbox" className="section" data-shape="h" aria-labelledby="toolbox-title">
-      <SectionHeading index="04" title={t.section.toolbox} id="toolbox-title" />
+    <section id="toolbox" className="section" data-shape="dots" aria-labelledby="toolbox-title">
+      <SectionHeading index="05" title={t.section.toolbox} id="toolbox-title" />
       <div className="tool-groups">
         {toolbox.map((group, i) => (
           <Reveal key={group.id} index={i} className="tool-group">

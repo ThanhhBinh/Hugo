@@ -6,8 +6,8 @@ import { SectionHeading } from '../ui/SectionHeading'
 export function Education() {
   const { t, pick } = useLanguage()
   return (
-    <section id="education" className="section" data-shape="h" aria-labelledby="education-title">
-      <SectionHeading index="05" title={t.section.education} id="education-title" />
+    <section id="education" className="section" data-shape="dots" aria-labelledby="education-title">
+      <SectionHeading index="07" title={t.section.education} id="education-title" />
       {education.studying && (
         <Reveal className="card school studying">
           <div>
