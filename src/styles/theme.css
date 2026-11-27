@@ -11,7 +11,7 @@
   --accent-text: #ffc21a; /* accent used as text */
   --accent-ink: #141414; /* text on top of an accent fill */
   --glow: rgba(255, 194, 26, 0.32);
-  --header-bg: rgba(14, 14, 16, 0.72);
+  --header-bg: rgba(14, 14, 16, 0.94);
   --focus: #ffc21a;
   color-scheme: dark;
 }
@@ -27,7 +27,7 @@
   --accent-text: #8a5f00;
   --accent-ink: #141414;
   --glow: rgba(255, 194, 26, 0.45);
-  --header-bg: rgba(251, 246, 234, 0.78);
+  --header-bg: rgba(251, 246, 234, 0.94);
   --focus: #17171a;
   color-scheme: light;
 }

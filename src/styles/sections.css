@@ -966,10 +966,13 @@ main,
     font-size: 16px;
   }
 
-  .ladder,
   .stats,
   .service-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ladder-step {
+    padding: 12px 14px;
   }
 
   .case {

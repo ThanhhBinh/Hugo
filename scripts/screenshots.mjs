@@ -4,7 +4,7 @@ import { mkdirSync } from 'node:fs'
 import { chromium } from 'playwright'
 
 const URL = process.env.URL ?? 'http://localhost:4173/Hugo/'
-const SECTIONS = ['hero', 'about', 'experience', 'projects', 'toolbox', 'education', 'contact']
+const SECTIONS = ['hero', 'highlights', 'projects', 'services', 'experience', 'toolbox', 'goals', 'education', 'contact']
 const CASES = [
   { name: 'desktop-dark', viewport: { width: 1440, height: 900 }, colorScheme: 'dark', lang: 'en' },
   { name: 'desktop-light', viewport: { width: 1440, height: 900 }, colorScheme: 'light', lang: 'en' },
