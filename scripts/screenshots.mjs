@@ -74,6 +74,8 @@ for (const c of CASES) {
     console.error(`${c.name}: focus ring contrast ${ratio.toFixed(2)}:1 is below 3:1`)
     failed = true
   }
+  await page.evaluate(() => document.activeElement?.blur())
+
   for (const id of SECTIONS) {
     await page.evaluate((i) => document.getElementById(i)?.scrollIntoView({ behavior: 'instant' }), id)
     await page.waitForTimeout(1200)
