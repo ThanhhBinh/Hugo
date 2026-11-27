@@ -10,15 +10,17 @@ import {
   MathUtils,
   NormalBlending,
   PerspectiveCamera,
+  PointsMaterial,
 } from 'three'
-import { hShape, nearestLinks, ringShape, sortByHeight, sphereShape } from './shapes'
-import { readSections, shapeWeights, targetShapeValue } from './shapeTarget'
+import { dotsShape, nearestLinks, sortByHeight, sphereShape } from './shapes'
+import { readSections, sceneOpacity, shapeWeights, targetShapeValue } from './shapeTarget'
 
 const NODES = 64
 const RADIUS = 2.6
 const PACKETS = 10
 const LINK_STRENGTH = 0.42
 const WIDE = 960
+const FIELD = { w: 16, h: 10, depth: 4 }
 
 function makeDot(): CanvasTexture {
   const canvas = document.createElement('canvas')
@@ -45,22 +47,21 @@ function themeLook() {
 
 export function NetworkShape() {
   const group = useRef<Group>(null)
+  const nodeMat = useRef<PointsMaterial>(null)
+  const packetMat = useRef<PointsMaterial>(null)
   const { size } = useThree()
   const [look, setLook] = useState(themeLook)
 
-  // Static data: the three shapes, their links, neighbour lists.
+  // Static data: the sphere and the dots field, the sphere's links, its neighbour lists.
+  // Only the sphere has links; the dots field is just faint points.
   const data = useMemo(() => {
-    const shapes = [sortByHeight(sphereShape(NODES, RADIUS)), sortByHeight(hShape(NODES)), sortByHeight(ringShape(NODES, RADIUS))]
-    const linkSets = shapes.map((p, s) => nearestLinks(p, s === 0 ? 3 : 2))
-    const links = linkSets.flatMap((set, s) => set.map(([a, b]) => ({ a, b, s })))
-    const neighbours = linkSets.map((set) => {
-      const nb: number[][] = Array.from({ length: NODES }, () => [])
-      for (const [a, b] of set) {
-        nb[a]!.push(b)
-        nb[b]!.push(a)
-      }
-      return nb
-    })
+    const shapes = [sortByHeight(sphereShape(NODES, RADIUS)), sortByHeight(dotsShape(NODES, FIELD.w, FIELD.h, FIELD.depth))]
+    const links = nearestLinks(shapes[0]!, 3).map(([a, b]) => ({ a, b }))
+    const neighbours: number[][] = Array.from({ length: NODES }, () => [])
+    for (const { a, b } of links) {
+      neighbours[a]!.push(b)
+      neighbours[b]!.push(a)
+    }
     return { shapes, links, neighbours }
   }, [])
 
@@ -82,7 +83,7 @@ export function NetworkShape() {
     // Deterministic spread (no Math.random during render).
     packets: Array.from({ length: PACKETS }, (_, i) => {
       const from = (i * 37) % NODES
-      const nb = data.neighbours[0]![from]!
+      const nb = data.neighbours[from]!
       return { from, to: nb[i % nb.length] ?? from, t: (i * 0.618) % 1, speed: 0.4 + ((i * 0.381) % 1) * 0.4 }
     }),
   })
@@ -115,21 +116,26 @@ export function NetworkShape() {
     s.time += dt
     s.value = MathUtils.lerp(s.value, targetShapeValue(readSections(), window.innerHeight), 1 - Math.pow(0.002, dt))
     const w = shapeWeights(s.value)
+    document.documentElement.style.setProperty('--scene-opacity', sceneOpacity(w[1]).toFixed(3))
+    if (nodeMat.current) nodeMat.current.size = MathUtils.lerp(0.2, 0.13, w[1])
+    if (packetMat.current) packetMat.current.opacity = w[0]
 
-    // Mix the shapes. The sphere spins on its own; H and ring only sway.
+    // Mix the shapes. The sphere spins on its own; the dots drift upward slowly as you scroll.
     s.spin += dt * 0.25
+    const drift = window.scrollY * 0.002
     const cos = Math.cos(s.spin)
     const sin = Math.sin(s.spin)
     const pos = geo.nodes.getAttribute('position') as BufferAttribute
     const p = pos.array as Float32Array
-    const [S, H, R] = data.shapes as [typeof data.shapes[0], typeof data.shapes[0], typeof data.shapes[0]]
+    const [S, D] = data.shapes as [typeof data.shapes[0], typeof data.shapes[0]]
     for (let i = 0; i < NODES; i++) {
       const a = S[i]!
-      const h = H[i]!
-      const r = R[i]!
-      p[i * 3] = w[0] * (a[0] * cos - a[2] * sin) + w[1] * h[0] + w[2] * r[0]
-      p[i * 3 + 1] = w[0] * a[1] + w[1] * h[1] + w[2] * r[1]
-      p[i * 3 + 2] = w[0] * (a[0] * sin + a[2] * cos) + w[1] * h[2] + w[2] * r[2]
+      const d = D[i]!
+      // Wrap the drifting dots inside the field so they never leave the screen.
+      const dy = ((((d[1] + drift + FIELD.h / 2) % FIELD.h) + FIELD.h) % FIELD.h) - FIELD.h / 2
+      p[i * 3] = w[0] * (a[0] * cos - a[2] * sin) + w[1] * d[0]
+      p[i * 3 + 1] = w[0] * a[1] + w[1] * dy
+      p[i * 3 + 2] = w[0] * (a[0] * sin + a[2] * cos) + w[1] * d[2]
     }
     pos.needsUpdate = true
 
@@ -137,25 +143,24 @@ export function NetworkShape() {
     const lp = (geo.lines.getAttribute('position') as BufferAttribute).array as Float32Array
     const lc = (geo.lines.getAttribute('color') as BufferAttribute).array as Float32Array
     const { color } = look
-    data.links.forEach(({ a, b, s: shape }, k) => {
+    data.links.forEach(({ a, b }, k) => {
       for (let c = 0; c < 3; c++) {
         lp[k * 6 + c] = p[a * 3 + c]!
         lp[k * 6 + 3 + c] = p[b * 3 + c]!
       }
-      const alpha = w[shape] * LINK_STRENGTH
+      const alpha = w[0] * LINK_STRENGTH
       lc.set([color.r, color.g, color.b, alpha, color.r, color.g, color.b, alpha], k * 8)
     })
     geo.lines.getAttribute('position').needsUpdate = true
     geo.lines.getAttribute('color').needsUpdate = true
 
-    // Packets hop along the links of the strongest shape.
-    const active = w.indexOf(Math.max(...w))
+    // Packets hop along the sphere's links and fade out with it.
     const pp = (geo.packets.getAttribute('position') as BufferAttribute).array as Float32Array
     for (let i = 0; i < PACKETS; i++) {
       const pk = s.packets[i]!
       pk.t += pk.speed * dt
       if (pk.t >= 1) {
-        const nb = data.neighbours[active]![pk.to]!
+        const nb = data.neighbours[pk.to]!
         const options = nb.filter((n) => n !== pk.from)
         const pick = options.length ? options : nb
         pk.from = pk.to
@@ -170,25 +175,24 @@ export function NetworkShape() {
     const g = group.current
     if (g) {
       const visibleW = 2 * Math.tan(MathUtils.degToRad(cam.fov / 2)) * cam.position.z * cam.aspect
-      g.position.x = MathUtils.lerp(g.position.x, size.width >= WIDE ? visibleW * 0.24 : 0, 0.08)
+      g.position.x = MathUtils.lerp(g.position.x, size.width >= WIDE ? visibleW * 0.24 * w[0] : 0, 0.08)
       s.tilt.x = MathUtils.lerp(s.tilt.x, s.pointer.y * 0.3, 0.05)
       s.tilt.y = MathUtils.lerp(s.tilt.y, s.pointer.x * 0.4, 0.05)
-      g.rotation.x = s.tilt.x + w[0] * 0.2
-      g.rotation.y = s.tilt.y + (w[1] + w[2]) * Math.sin(s.time * 0.6) * 0.35
-      g.rotation.z = w[2] * s.time * 0.15
+      g.rotation.x = s.tilt.x * (1 - 0.6 * w[1]) + w[0] * 0.2
+      g.rotation.y = s.tilt.y * (1 - 0.6 * w[1]) + w[1] * Math.sin(s.time * 0.3) * 0.08
     }
   })
 
   return (
     <group ref={group}>
       <points geometry={geo.nodes}>
-        <pointsMaterial size={0.2} map={geo.dot} color={look.color} transparent depthWrite={false} blending={look.blending} />
+        <pointsMaterial ref={nodeMat} size={0.2} map={geo.dot} color={look.color} transparent depthWrite={false} blending={look.blending} />
       </points>
       <lineSegments geometry={geo.lines}>
         <lineBasicMaterial vertexColors transparent depthWrite={false} blending={look.blending} />
       </lineSegments>
       <points geometry={geo.packets}>
-        <pointsMaterial size={0.26} map={geo.dot} color={look.packet} transparent depthWrite={false} blending={look.blending} />
+        <pointsMaterial ref={packetMat} size={0.26} map={geo.dot} color={look.packet} transparent depthWrite={false} blending={look.blending} />
       </points>
     </group>
   )

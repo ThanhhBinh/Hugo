@@ -13,37 +13,15 @@ export function sphereShape(n: number, r: number): Vec3[] {
   })
 }
 
-const H_STROKES: Array<[[number, number], [number, number]]> = [
-  [[-1.5, -2.3], [-1.5, 2.3]], // left bar
-  [[1.5, -2.3], [1.5, 2.3]], // right bar
-  [[-1.5, 0], [1.5, 0]], // cross bar
-]
-
-/** Points along the three strokes of an "H", in two layers (z = ±0.35) for depth. */
-export function hShape(n: number): Vec3[] {
-  const lengths = H_STROKES.map(([a, b]) => Math.hypot(b[0] - a[0], b[1] - a[1]))
-  const total = lengths.reduce((s, l) => s + l, 0)
-  const front = Math.floor(n / 2)
-  const points: Vec3[] = []
-  for (const [count, z] of [[front, -0.35], [n - front, 0.35]] as const) {
-    for (let i = 0; i < count; i++) {
-      // Walk along all strokes as if they were one long line.
-      let d = ((i + 0.5) / count) * total
-      let s = 0
-      while (s < H_STROKES.length - 1 && d > lengths[s]!) d -= lengths[s++]!
-      const [a, b] = H_STROKES[s]!
-      const t = Math.min(1, d / lengths[s]!)
-      points.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, z])
-    }
-  }
-  return points
-}
-
-/** Points on a flat ring, alternating slightly in depth. */
-export function ringShape(n: number, r: number): Vec3[] {
+/** A scattered field of points filling a w × h × depth box (low-discrepancy, so no random and no clumps). */
+export function dotsShape(n: number, w: number, h: number, depth: number): Vec3[] {
   return Array.from({ length: n }, (_, i) => {
-    const a = (i / n) * Math.PI * 2
-    return [Math.cos(a) * r, Math.sin(a) * r, i % 2 ? 0.18 : -0.18]
+    const k = i + 1
+    return [
+      (((k * 0.7548776662466927) % 1) - 0.5) * w,
+      (((k * 0.5698402909980532) % 1) - 0.5) * h,
+      (((k * 0.4301597090019468) % 1) - 0.5) * depth,
+    ]
   })
 }
 
