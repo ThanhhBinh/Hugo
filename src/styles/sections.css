@@ -335,6 +335,8 @@ main,
   border: 1px solid currentColor;
   border-radius: 999px;
   padding: 1px 9px;
+  flex: none;
+  white-space: nowrap;
   transform: translateY(-4px);
 }
 
