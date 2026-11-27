@@ -9,10 +9,12 @@ import { Hero } from './components/sections/Hero'
 import { Projects } from './components/sections/Projects'
 import { Toolbox } from './components/sections/Toolbox'
 import { LanguageProvider } from './i18n/LanguageProvider'
+import { SceneLayer } from './scene/SceneLayer'
 
 export default function App() {
   return (
     <LanguageProvider>
+      <SceneLayer />
       <ScrollProgress />
       <Header />
       <main id="top">

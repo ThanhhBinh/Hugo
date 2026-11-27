@@ -13,6 +13,27 @@ main,
   padding-inline: var(--gutter);
 }
 
+/* ---------- 3D layer ------------------------------------------------------ */
+.scene-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  animation: scene-in 1.2s ease both;
+}
+
+@keyframes scene-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 959px) {
+  .scene-layer {
+    opacity: 0.35;
+  }
+}
+
 /* ---------- Header -------------------------------------------------------- */
 .site-header {
   position: sticky;

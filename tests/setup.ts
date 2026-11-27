@@ -16,6 +16,9 @@ function stubMatchMedia(matches: (query: string) => boolean = () => false) {
     dispatchEvent: vi.fn(() => false),
   })) as unknown as typeof window.matchMedia
 }
+// jsdom cannot draw: report "no canvas context" quietly (tests that need one spy on it).
+HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext
+
 stubMatchMedia()
 ;(globalThis as { stubMatchMedia?: typeof stubMatchMedia }).stubMatchMedia = stubMatchMedia
 
