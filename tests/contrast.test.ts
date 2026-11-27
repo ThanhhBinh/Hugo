@@ -1,7 +1,5 @@
-import { readFileSync } from 'node:fs'
 import { describe, expect, test } from 'vitest'
-
-const css = readFileSync('src/styles/theme.css', 'utf8')
+import css from '../src/styles/theme.css?raw'
 
 function vars(block: string): Record<string, string> {
   return Object.fromEntries([...block.matchAll(/--([\w-]+):\s*(#[0-9a-fA-F]{6})/g)].map((m) => [m[1]!, m[2]!]))
